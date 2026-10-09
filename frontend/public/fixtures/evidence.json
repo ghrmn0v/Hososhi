@@ -1,0 +1,28 @@
+{
+  "wf_purchase_request": [
+    {
+      "ref": "POL-PR-07",
+      "type": "policy",
+      "title": "Price variance tolerance",
+      "snippet": "Price verification is required above a defined threshold.",
+      "relevance": 0.91,
+      "date": "2025-11-01"
+    },
+    {
+      "ref": "DEC-104",
+      "type": "decision",
+      "title": "Supplier discrepancy review",
+      "snippet": "A previous supplier discrepancy resulted in additional verification.",
+      "relevance": 0.86,
+      "date": "2026-01-14"
+    },
+    {
+      "ref": "INC-38",
+      "type": "incident",
+      "title": "Purchase / invoice mismatch",
+      "snippet": "A previous purchase and invoice mismatch.",
+      "relevance": 0.79,
+      "date": "2025-09-22"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "workflow_id": "wf_purchase_request",
+  "name": "Purchase Request Processing",
+  "category": "Procurement",
+  "description": "Discovered from company events: how purchase requests actually move from submission to purchase order.",
+  "discovered_at": null,
+  "event_count": null,
+  "executions": null,
+  "avg_duration_ms": null,
+  "last_activity_at": null,
+  "automation_potential": null,
+  "steps": [
+    {
+      "step_id": "stp_request",
+      "name": "Purchase request",
+      "order": 1,
+      "description": "A purchase request is submitted by a requesting employee.",
+      "automation_class": null
+    },
+    {
+      "step_id": "stp_extract",
+      "name": "Extract information",
+      "order": 2,
+      "description": "Request fields are read from the submitted document.",
+      "automation_class": "SAFE"
+    },
+    {
+      "step_id": "stp_supplier",
+      "name": "Identify supplier",
+      "order": 3,
+      "description": "The supplier is matched against the supplier register.",
+      "automation_class": "SAFE"
+    },
+    {
+      "step_id": "stp_price",
+      "name": "Verify price",
+      "order": 4,
+      "description": "Compares the quoted price with supplier records.",
+      "automation_class": "SAFE"
+    },
+    {
+      "step_id": "stp_policy",
+      "name": "Check policy",
+      "order": 5,
+      "description": "The request is checked against company policy.",
+      "automation_class": "SAFE"
+    },
+    {
+      "step_id": "stp_history",
+      "name": "Search historical decisions",
+      "order": 6,
+      "description": "Past decisions on similar requests are retrieved for review.",
+      "automation_class": "HUMAN_REVIEW"
+    },
+    {
+      "step_id": "stp_approval",
+      "name": "Manager approval",
+      "order": 7,
+      "description": "A manager approves or rejects the purchase request.",
+      "automation_class": "HUMAN_REQUIRED"
+    },
+    {
+      "step_id": "stp_po",
+      "name": "Create purchase order",
+      "order": 8,
+      "description": "The purchase order is created once approval is recorded.",
+      "automation_class": "SAFE"
+    }
+  ]
+}

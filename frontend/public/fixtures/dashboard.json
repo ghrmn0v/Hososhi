@@ -1,0 +1,44 @@
+{
+  "workflows_discovered": 1,
+  "automation_opportunities": 5,
+  "workflow_executions": 0,
+  "time_saved_ms": null,
+  "time_saved_is_estimate": true,
+  "workflows": [
+    {
+      "workflow_id": "wf_purchase_request",
+      "name": "Purchase Request Processing",
+      "category": "Procurement",
+      "executions": null,
+      "avg_duration_ms": null,
+      "last_activity_at": null
+    }
+  ],
+  "recent_activity": [
+    {
+      "at": null,
+      "label": "Approval requested",
+      "workflow_name": "Purchase Request Processing"
+    },
+    {
+      "at": null,
+      "label": "Step completed",
+      "workflow_name": "Purchase Request Processing"
+    },
+    {
+      "at": null,
+      "label": "Evidence retrieved",
+      "workflow_name": null
+    },
+    {
+      "at": null,
+      "label": "Automation run started",
+      "workflow_name": "Purchase Request Processing"
+    },
+    {
+      "at": null,
+      "label": "Workflow updated",
+      "workflow_name": "Purchase Request Processing"
+    }
+  ]
+}

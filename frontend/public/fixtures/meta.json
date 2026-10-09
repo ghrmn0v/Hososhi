@@ -1,0 +1,13 @@
+{
+  "dataset": {
+    "synthetic": true,
+    "description": "Fixture data — not a real company dataset. No backend was called.",
+    "events": null,
+    "seeded_at": null
+  },
+  "ai": {
+    "provider": null,
+    "model": null,
+    "fallback_used": false
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "workflow_id": "wf_purchase_request",
+  "policy_rules_version": "safety-rules-v1",
+  "summary": {
+    "safe": 5,
+    "human_review": 1,
+    "human_required": 1
+  },
+  "steps": [
+    {
+      "step_id": "stp_extract",
+      "name": "Extract request information",
+      "automation_class": "SAFE",
+      "reason": "Reads fields from the submitted document. Deterministic and verifiable — the extracted values can be checked against the source.",
+      "confidence": 0.94,
+      "requires_approval": false
+    },
+    {
+      "step_id": "stp_supplier",
+      "name": "Identify supplier",
+      "automation_class": "SAFE",
+      "reason": "Matches the supplier name against the supplier register. Reversible and the match is inspectable.",
+      "confidence": 0.91,
+      "requires_approval": false
+    },
+    {
+      "step_id": "stp_price",
+      "name": "Verify price",
+      "automation_class": "SAFE",
+      "reason": "Compares the quoted price with recorded supplier prices. Deterministic comparison against POL-PR-07.",
+      "confidence": 0.9,
+      "requires_approval": false
+    },
+    {
+      "step_id": "stp_policy",
+      "name": "Check company policy",
+      "automation_class": "SAFE",
+      "reason": "Applies written policy rules. A person wrote the rule, so applying it is not a judgment call.",
+      "confidence": 0.93,
+      "requires_approval": false
+    },
+    {
+      "step_id": "stp_history",
+      "name": "Search historical decisions",
+      "automation_class": "HUMAN_REVIEW",
+      "reason": "Similar past requests are retrieved automatically, but deciding whether a past decision still applies is a judgment call.",
+      "confidence": 0.76,
+      "requires_approval": true
+    },
+    {
+      "step_id": "stp_approval",
+      "name": "Manager approval",
+      "automation_class": "HUMAN_REQUIRED",
+      "reason": "Financial commitment. Only an approval record can advance this step.",
+      "confidence": 0.99,
+      "requires_approval": true
+    },
+    {
+      "step_id": "stp_po",
+      "name": "Create purchase order",
+      "automation_class": "SAFE",
+      "reason": "Runs automatically, but only after an approved approval record exists for this run.",
+      "confidence": 0.95,
+      "requires_approval": false
+    }
+  ]
+}

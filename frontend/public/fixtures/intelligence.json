@@ -1,0 +1,58 @@
+{
+  "stp_price": {
+    "step_id": "stp_price",
+    "question": "Why does this step exist?",
+    "summary": "Required for requests above a price threshold after a supplier discrepancy.",
+    "answer": "Price verification appears to be required for purchase requests above a specific threshold because previous supplier discrepancies led to the introduction of this control. In the observed events, this step runs before any purchase order is created and its result is recorded on the request itself. A historical decision required the check after a discrepancy was found between a quoted price and the recorded supplier price, and the incident that followed is what made the control mandatory rather than optional.",
+    "confidence": 0.84,
+    "evidence": [
+      {
+        "ref": "POL-PR-07",
+        "type": "policy",
+        "title": "Price variance tolerance",
+        "snippet": "Price verification is required above a defined threshold.",
+        "relevance": 0.91,
+        "date": "2025-11-01"
+      },
+      {
+        "ref": "DEC-104",
+        "type": "decision",
+        "title": "Supplier discrepancy review",
+        "snippet": "A previous supplier discrepancy resulted in additional verification.",
+        "relevance": 0.86,
+        "date": "2026-01-14"
+      },
+      {
+        "ref": "INC-38",
+        "type": "incident",
+        "title": "Purchase / invoice mismatch",
+        "snippet": "A previous purchase and invoice mismatch.",
+        "relevance": 0.79,
+        "date": "2025-09-22"
+      }
+    ],
+    "model": "fixture — no model was called",
+    "generated_at": null,
+    "fallback_used": false
+  },
+  "stp_history": {
+    "step_id": "stp_history",
+    "question": "Why does this step exist?",
+    "summary": "Past decisions on similar requests are consulted before a decision is repeated.",
+    "answer": "This step retrieves recorded decisions on similar purchase requests so that the same situation is not decided differently each time. In the observed events it runs immediately before manager approval and its findings are attached to the request. Whether a past decision still applies to a new request depends on the current facts, which is why this step is classified for human review rather than automatic execution.",
+    "confidence": 0.72,
+    "evidence": [
+      {
+        "ref": "DEC-104",
+        "type": "decision",
+        "title": "Supplier discrepancy review",
+        "snippet": "A previous supplier discrepancy resulted in additional verification.",
+        "relevance": 0.88,
+        "date": "2026-01-14"
+      }
+    ],
+    "model": "fixture — no model was called",
+    "generated_at": null,
+    "fallback_used": false
+  }
+}
