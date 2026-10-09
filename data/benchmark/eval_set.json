@@ -1,0 +1,134 @@
+{
+  "_note": "Fixed eval set for the provider benchmark (Developer 2). Same cases for every provider. 10 cases spanning the four roles. expected_* values are authored from the synthetic dataset in data/evidence/evidence.json and are the reference answers, not model output.",
+  "dataset": "data/evidence/evidence.json",
+  "version": "eval-v1",
+  "cases": [
+    {
+      "id": "EV-01",
+      "role": "extract",
+      "step_id": "stp_extract",
+      "request_id": "pr_0001",
+      "prompt_context": "Extract the structured fields of pr_0001.",
+      "expected": {
+        "request_id": "pr_0001",
+        "supplier": "AzLab Supplies",
+        "amount": 18400.0,
+        "department": "Operations"
+      },
+      "checked_fields": ["supplier", "amount", "department"]
+    },
+    {
+      "id": "EV-02",
+      "role": "extract",
+      "step_id": "stp_extract",
+      "request_id": "pr_0003",
+      "prompt_context": "Extract the structured fields of pr_0003.",
+      "expected": {
+        "request_id": "pr_0003",
+        "supplier": "TechLine",
+        "amount": 640.0,
+        "department": "IT"
+      },
+      "checked_fields": ["supplier", "amount", "department"]
+    },
+    {
+      "id": "EV-03",
+      "role": "understand",
+      "step_id": "stp_supplier",
+      "prompt_context": "What does the supplier identification step do and why is it in the workflow?",
+      "expected": {
+        "step_id": "stp_supplier",
+        "actor_role": "Procurement Specialist",
+        "must_mention_any": ["supplier", "catalogue"]
+      },
+      "checked_fields": ["step_id", "actor_role"]
+    },
+    {
+      "id": "EV-04",
+      "role": "understand",
+      "step_id": "stp_po",
+      "prompt_context": "What does the purchase order step do and why is it in the workflow?",
+      "expected": {
+        "step_id": "stp_po",
+        "must_mention_any": ["purchase order", "po"]
+      },
+      "checked_fields": ["step_id"]
+    },
+    {
+      "id": "EV-05",
+      "role": "explain",
+      "step_id": "stp_price",
+      "prompt_context": "Why does this step exist?",
+      "expected": {
+        "required_refs": ["POL-PR-07"],
+        "forbidden_refs": ["POL-NOT-EXIST"],
+        "min_confidence": 0.3,
+        "max_confidence": 0.98,
+        "must_mention_any": ["price", "variance", "catalogue"]
+      },
+      "checked_fields": ["evidence_refs", "confidence", "answer"]
+    },
+    {
+      "id": "EV-06",
+      "role": "explain",
+      "step_id": "stp_policy",
+      "prompt_context": "Why does this step exist?",
+      "expected": {
+        "required_refs": ["POL-PR-01"],
+        "min_confidence": 0.0,
+        "max_confidence": 0.95,
+        "must_mention_any": ["policy", "threshold", "approval"]
+      },
+      "checked_fields": ["evidence_refs", "confidence", "answer"]
+    },
+    {
+      "id": "EV-07",
+      "role": "explain",
+      "step_id": "stp_approval",
+      "prompt_context": "Why does this step exist?",
+      "expected": {
+        "required_refs": ["POL-PR-01"],
+        "min_confidence": 0.3,
+        "max_confidence": 0.98,
+        "must_mention_any": ["approval", "authoris", "authoriz", "manager", "threshold"]
+      },
+      "checked_fields": ["evidence_refs", "confidence", "answer"]
+    },
+    {
+      "id": "EV-08",
+      "role": "classify",
+      "step_id": "stp_extract",
+      "prompt_context": "Classify how far this step can be automated.",
+      "expected": {
+        "allowed_classes": ["SAFE", "HUMAN_REVIEW"],
+        "forbidden_classes": [],
+        "requires_approval": false
+      },
+      "checked_fields": ["automation_class", "requires_approval"]
+    },
+    {
+      "id": "EV-09",
+      "role": "classify",
+      "step_id": "stp_decisions",
+      "prompt_context": "Classify how far this step can be automated.",
+      "expected": {
+        "allowed_classes": ["HUMAN_REVIEW", "HUMAN_REQUIRED"],
+        "forbidden_classes": ["SAFE"],
+        "requires_approval": false
+      },
+      "checked_fields": ["automation_class"]
+    },
+    {
+      "id": "EV-10",
+      "role": "classify",
+      "step_id": "stp_approval",
+      "prompt_context": "Classify how far this step can be automated.",
+      "expected": {
+        "allowed_classes": ["HUMAN_REQUIRED"],
+        "forbidden_classes": ["SAFE", "HUMAN_REVIEW"],
+        "requires_approval": true
+      },
+      "checked_fields": ["automation_class", "requires_approval"]
+    }
+  ]
+}

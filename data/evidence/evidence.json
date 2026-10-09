@@ -1,0 +1,255 @@
+{
+  "_note": "Synthetic evidence dataset owned by Developer 2 (data/evidence/**). Used by app.ai.retrieval and by the eval set. IDs follow the project convention POL-*, DEC-*, INC-*, evt_*. Synthetic - not real company data.",
+  "workflow": {
+    "id": "wf_purchase_request",
+    "name": "Purchase Request Processing",
+    "category": "procurement"
+  },
+  "steps": [
+    {
+      "id": "stp_request",
+      "name": "Purchase Request",
+      "order": 1,
+      "type": "trigger",
+      "actor_role": "Employee",
+      "description": "An employee raises a purchase request for goods or services and submits it for processing.",
+      "department": null,
+      "entities": [],
+      "keywords": ["purchase request", "request", "submit", "requisition"],
+      "estimated_manual_minutes": 4
+    },
+    {
+      "id": "stp_extract",
+      "name": "Extract Request Information",
+      "order": 2,
+      "type": "extraction",
+      "actor_role": "Procurement Specialist",
+      "description": "Read the submitted request and extract supplier, items, amount, department and requester into structured fields.",
+      "department": null,
+      "entities": [],
+      "keywords": ["extract", "supplier", "items", "amount", "department", "requester", "structured"],
+      "estimated_manual_minutes": 6
+    },
+    {
+      "id": "stp_supplier",
+      "name": "Identify Supplier",
+      "order": 3,
+      "type": "lookup",
+      "actor_role": "Procurement Specialist",
+      "description": "Determine which supplier or catalogue item the request refers to, including substitutions when the requested item is unavailable.",
+      "department": "Procurement",
+      "entities": [],
+      "keywords": ["supplier", "identify", "catalogue", "substitute", "vendor", "match"],
+      "estimated_manual_minutes": 5
+    },
+    {
+      "id": "stp_price",
+      "name": "Verify Price",
+      "order": 4,
+      "type": "verification",
+      "actor_role": "Procurement Specialist",
+      "description": "Compare the requested unit price against the catalogue price and the supplier's historical price range for the item.",
+      "department": "Procurement",
+      "entities": [],
+      "keywords": ["price", "verify", "catalogue", "variance", "unit price", "cost", "amount", "comparison"],
+      "estimated_manual_minutes": 6
+    },
+    {
+      "id": "stp_policy",
+      "name": "Check Company Policy",
+      "order": 5,
+      "type": "policy_check",
+      "actor_role": "Procurement Specialist",
+      "description": "Check the request against the company procurement policies that apply to its department and amount.",
+      "department": null,
+      "entities": [],
+      "keywords": ["policy", "check", "rule", "threshold", "compliance", "procurement", "allowance"],
+      "estimated_manual_minutes": 7
+    },
+    {
+      "id": "stp_decisions",
+      "name": "Search Historical Decisions",
+      "order": 6,
+      "type": "retrieval",
+      "actor_role": "Procurement Specialist",
+      "description": "Look for earlier decisions, exceptions and incidents that are relevant to the current request before deciding.",
+      "department": null,
+      "entities": [],
+      "keywords": ["historical decision", "history", "exception", "precedent", "incident", "recall", "past"],
+      "estimated_manual_minutes": 9
+    },
+    {
+      "id": "stp_approval",
+      "name": "Manager Approval",
+      "order": 7,
+      "type": "approval",
+      "actor_role": "Department Manager",
+      "description": "The department manager reviews the request and approves or rejects the spend. This step carries financial commitment authority.",
+      "department": null,
+      "entities": [],
+      "keywords": ["approval", "manager", "authorise", "authorize", "sign off", "reject", "commit", "spend"],
+      "estimated_manual_minutes": 12
+    },
+    {
+      "id": "stp_po",
+      "name": "Create Purchase Order",
+      "order": 8,
+      "type": "execution",
+      "actor_role": "Procurement Specialist",
+      "description": "Raise the purchase order with the approved supplier once manager approval is recorded.",
+      "department": "Procurement",
+      "entities": [],
+      "keywords": ["purchase order", "po", "create", "raise", "order", "issue"],
+      "estimated_manual_minutes": 5
+    }
+  ],
+  "policies": [
+    {
+      "id": "POL-PR-01",
+      "title": "Procurement Approval Threshold",
+      "rule": "Any purchase request with a total amount above 2000 AZN must be approved by the department manager before a purchase order can be raised.",
+      "effective_date": "2025-03-01",
+      "department": "Procurement",
+      "severity": "high"
+    },
+    {
+      "id": "POL-PR-07",
+      "title": "Price Variance Tolerance",
+      "rule": "A requested unit price may not deviate from the catalogue price by more than 10 percent without documented approval. Deviations above 10 percent must be reviewed before the request proceeds.",
+      "effective_date": "2025-11-01",
+      "department": "Procurement",
+      "severity": "medium"
+    },
+    {
+      "id": "POL-PR-11",
+      "title": "Preferred Supplier Requirement",
+      "rule": "Goods must be sourced from an approved preferred supplier unless that supplier cannot supply the item within the required date.",
+      "effective_date": "2026-01-15",
+      "department": "Procurement",
+      "severity": "medium"
+    },
+    {
+      "id": "POL-PR-14",
+      "title": "Split Purchase Prohibition",
+      "rule": "A single requirement must not be split into multiple smaller purchase requests in order to remain below the approval threshold.",
+      "effective_date": "2026-02-10",
+      "department": "Procurement",
+      "severity": "high"
+    },
+    {
+      "id": "POL-PR-18",
+      "title": "Invoice Payment Terms",
+      "rule": "Invoices must be settled within 30 days of receipt. Suppliers offering payment terms longer than 45 days require a separate commercial approval.",
+      "effective_date": "2026-04-01",
+      "department": "Finance",
+      "severity": "low"
+    },
+    {
+      "id": "POL-PR-22",
+      "title": "Direct Purchase Allowance Below Threshold",
+      "rule": "Purchase requests with a total amount up to 2000 AZN do not require manager approval and may be converted directly into a purchase order after the policy check passes.",
+      "effective_date": "2026-05-20",
+      "department": "Procurement",
+      "severity": "medium"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "DEC-104",
+      "title": "Catalog Price Deviation Emergency Exception",
+      "date": "2026-06-18",
+      "reason": "A supplier withdrawal left a single source for calibration equipment. Operations asked to proceed at a 22 percent deviation from catalogue price.",
+      "participants": ["dep_mgr_operations", "proc_specialist_01", "finance_controller"],
+      "evidence": ["POL-PR-07"],
+      "outcome": "approved_with_conditions"
+    },
+    {
+      "id": "DEC-112",
+      "title": "Substitution Policy for Unavailable Catalogue Items",
+      "date": "2026-07-02",
+      "reason": "Clarified that a specialist may propose an equivalent substitute when the requested catalogue item is unavailable, provided the price check is repeated for the substitute.",
+      "participants": ["proc_specialist_01", "dep_mgr_procurement"],
+      "evidence": ["POL-PR-11"],
+      "outcome": "approved"
+    },
+    {
+      "id": "DEC-118",
+      "title": "Repeated Price Deviations Review",
+      "date": "2026-07-24",
+      "reason": "Three consecutive requests from the same department exceeded the 10 percent price variance tolerance. The department argued that the catalogue prices were stale.",
+      "participants": ["dep_mgr_procurement", "finance_controller", "dep_mgr_operations"],
+      "evidence": ["POL-PR-07", "INC-38"],
+      "outcome": "unresolved"
+    },
+    {
+      "id": "DEC-121",
+      "title": "Approval Threshold for Small Purchases",
+      "date": "2026-08-05",
+      "reason": "Procurement proposed removing manager approval for requests below 2000 AZN to shorten cycle time. Finance raised that the control also catches split purchases.",
+      "participants": ["dep_mgr_procurement", "finance_controller"],
+      "evidence": ["POL-PR-01", "POL-PR-14"],
+      "outcome": "unresolved"
+    },
+    {
+      "id": "DEC-127",
+      "title": "Emergency Purchases Bypass Price Check",
+      "date": "2026-08-30",
+      "reason": "A proposal to let urgent operational purchases skip the price variance check entirely, arguing that delay costs more than the variance.",
+      "participants": ["dep_mgr_operations"],
+      "evidence": ["POL-PR-07"],
+      "outcome": "rejected"
+    }
+  ],
+  "incidents": [
+    {
+      "id": "INC-38",
+      "title": "Unchecked Price Variance Accepted",
+      "date": "2026-05-11",
+      "severity": "high",
+      "impact": "A purchase order for laboratory consumables was raised at a 31 percent premium over catalogue price because the price check step was skipped during a busy period. The variance was detected in the monthly reconciliation, after the goods were delivered.",
+      "linked_policy_id": "POL-PR-07",
+      "linked_decision_id": "DEC-118"
+    },
+    {
+      "id": "INC-41",
+      "title": "Split Purchase Detected After Approval",
+      "date": "2026-06-02",
+      "severity": "medium",
+      "impact": "A capital requirement was split into three requests that individually stayed below the approval threshold but together exceeded it by a factor of three. Control only caught it in audit.",
+      "linked_policy_id": "POL-PR-14",
+      "linked_decision_id": "DEC-121"
+    },
+    {
+      "id": "INC-45",
+      "title": "Preferred Supplier Bypassed Without Record",
+      "date": "2026-08-14",
+      "severity": "medium",
+      "impact": "Two orders went to a non-preferred supplier with no recorded justification, so the substitution decision could not be reconstructed later.",
+      "linked_policy_id": "POL-PR-11",
+      "linked_decision_id": "DEC-112"
+    }
+  ],
+  "events": [
+    {"id": "evt_0001", "timestamp": "2026-06-18T09:12:00Z", "request_id": "pr_0001", "employee_id": "emp_007", "application": "erp", "action": "purchase_request.created", "entity": "PurchaseRequest", "entity_id": "pr_0001", "metadata": {"amount": 18400, "department": "Operations", "items": ["calibration_kit"]}},
+    {"id": "evt_0002", "timestamp": "2026-06-18T09:31:00Z", "request_id": "pr_0001", "employee_id": "emp_007", "application": "erp", "action": "request.extracted", "entity": "PurchaseRequest", "entity_id": "pr_0001", "metadata": {"supplier": "AzLab Supplies", "amount": 18400}},
+    {"id": "evt_0003", "timestamp": "2026-06-18T09:44:00Z", "request_id": "pr_0001", "employee_id": "emp_012", "application": "erp", "action": "supplier.identified", "entity": "Supplier", "entity_id": "sup_003", "metadata": {"match": "catalogue"}},
+    {"id": "evt_0004", "timestamp": "2026-06-18T10:02:00Z", "request_id": "pr_0001", "employee_id": "emp_012", "application": "erp", "action": "price.verified", "entity": "PurchaseRequest", "entity_id": "pr_0001", "metadata": {"requested": 18400, "catalogue": 15080, "deviation_pct": 22.0, "policy_ref": "POL-PR-07"}},
+    {"id": "evt_0005", "timestamp": "2026-06-18T10:20:00Z", "request_id": "pr_0001", "employee_id": "emp_012", "application": "erp", "action": "policy.checked", "entity": "Policy", "entity_id": "POL-PR-01", "metadata": {"result": "requires_approval"}},
+    {"id": "evt_0006", "timestamp": "2026-06-18T11:05:00Z", "request_id": "pr_0001", "employee_id": "emp_012", "application": "erp", "action": "decisions.searched", "entity": "Decision", "entity_id": "DEC-104", "metadata": {"hits": 1}},
+    {"id": "evt_0007", "timestamp": "2026-06-18T13:40:00Z", "request_id": "pr_0001", "employee_id": "emp_004", "application": "erp", "action": "approval.granted", "entity": "Approval", "entity_id": "apr_0001", "metadata": {"decision_ref": "DEC-104"}},
+    {"id": "evt_0008", "timestamp": "2026-06-18T14:10:00Z", "request_id": "pr_0001", "employee_id": "emp_012", "application": "erp", "action": "purchase_order.created", "entity": "PurchaseOrder", "entity_id": "po_0001", "metadata": {"supplier": "AzLab Supplies", "amount": 18400}},
+    {"id": "evt_0009", "timestamp": "2026-07-24T08:55:00Z", "request_id": "pr_0002", "employee_id": "emp_009", "application": "erp", "action": "purchase_request.created", "entity": "PurchaseRequest", "entity_id": "pr_0002", "metadata": {"amount": 9650, "department": "Operations", "items": ["pump_seal_kit"]}},
+    {"id": "evt_0010", "timestamp": "2026-07-24T09:18:00Z", "request_id": "pr_0002", "employee_id": "emp_009", "application": "erp", "action": "request.extracted", "entity": "PurchaseRequest", "entity_id": "pr_0002", "metadata": {"supplier": "Delta Pumps", "amount": 9650}},
+    {"id": "evt_0011", "timestamp": "2026-07-24T09:29:00Z", "request_id": "pr_0002", "employee_id": "emp_012", "application": "erp", "action": "supplier.identified", "entity": "Supplier", "entity_id": "sup_007", "metadata": {"match": "preferred"}},
+    {"id": "evt_0012", "timestamp": "2026-07-24T09:48:00Z", "request_id": "pr_0002", "employee_id": "emp_012", "application": "erp", "action": "price.verified", "entity": "PurchaseRequest", "entity_id": "pr_0002", "metadata": {"requested": 9650, "catalogue": 9100, "deviation_pct": 6.0, "policy_ref": "POL-PR-07"}},
+    {"id": "evt_0013", "timestamp": "2026-07-24T10:05:00Z", "request_id": "pr_0002", "employee_id": "emp_012", "application": "erp", "action": "policy.checked", "entity": "Policy", "entity_id": "POL-PR-01", "metadata": {"result": "requires_approval"}},
+    {"id": "evt_0014", "timestamp": "2026-07-24T11:02:00Z", "request_id": "pr_0002", "employee_id": "emp_012", "application": "erp", "action": "decisions.searched", "entity": "Decision", "entity_id": "DEC-118", "metadata": {"hits": 2}},
+    {"id": "evt_0015", "timestamp": "2026-07-24T15:20:00Z", "request_id": "pr_0002", "employee_id": "emp_004", "application": "erp", "action": "approval.rejected", "entity": "Approval", "entity_id": "apr_0002", "metadata": {"reason": "catalogue price stale, re-quote requested"}},
+    {"id": "evt_0016", "timestamp": "2026-08-14T10:11:00Z", "request_id": "pr_0003", "employee_id": "emp_011", "application": "erp", "action": "purchase_request.created", "entity": "PurchaseRequest", "entity_id": "pr_0003", "metadata": {"amount": 640, "department": "IT", "items": ["laptop_dock"]}},
+    {"id": "evt_0017", "timestamp": "2026-08-14T10:35:00Z", "request_id": "pr_0003", "employee_id": "emp_011", "application": "erp", "action": "request.extracted", "entity": "PurchaseRequest", "entity_id": "pr_0003", "metadata": {"supplier": "TechLine", "amount": 640}},
+    {"id": "evt_0018", "timestamp": "2026-08-14T10:52:00Z", "request_id": "pr_0003", "employee_id": "emp_011", "application": "erp", "action": "supplier.identified", "entity": "Supplier", "entity_id": "sup_011", "metadata": {"match": "non_preferred", "justification": null}},
+    {"id": "evt_0019", "timestamp": "2026-08-14T11:14:00Z", "request_id": "pr_0003", "employee_id": "emp_011", "application": "erp", "action": "price.verified", "entity": "PurchaseRequest", "entity_id": "pr_0003", "metadata": {"requested": 640, "catalogue": 640, "deviation_pct": 0.0, "policy_ref": "POL-PR-07"}},
+    {"id": "evt_0020", "timestamp": "2026-08-14T11:30:00Z", "request_id": "pr_0003", "employee_id": "emp_011", "application": "erp", "action": "policy.checked", "entity": "Policy", "entity_id": "POL-PR-22", "metadata": {"result": "no_manager_approval_required"}},
+    {"id": "evt_0021", "timestamp": "2026-08-14T11:42:00Z", "request_id": "pr_0003", "employee_id": "emp_011", "application": "erp", "action": "purchase_order.created", "entity": "PurchaseOrder", "entity_id": "po_0003", "metadata": {"supplier": "TechLine", "amount": 640}}
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-10-09T08:40:55Z",
+  "status": "not_measured",
+  "reason": "No AI provider was configured, so no request was made. There are deliberately no latency, validity or correctness figures in this file.",
+  "eval_set": {
+    "path": "data/benchmark/eval_set.json",
+    "version": "eval-v1",
+    "case_count": 10,
+    "runs_per_case": 0
+  },
+  "environment": {
+    "provider_config": {
+      "primary": {
+        "provider": "none",
+        "model": "",
+        "base_url": "",
+        "timeout_seconds": 20.0,
+        "max_retries": 1,
+        "supports_json_mode": true,
+        "api_key_present": false
+      },
+      "fallback": null,
+      "context_evidence_cap": 12,
+      "context_event_cap": 15,
+      "cache_enabled": true,
+      "allow_deterministic_fallback": true
+    }
+  },
+  "providers": [],
+  "per_case": {}
+}
