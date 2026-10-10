@@ -1,0 +1,19 @@
+# Hososhi backend dependencies
+# https://github.com/ghrmn0v/Hososhi
+
+# Required for application startup:
+pydantic-settings>=0.1,<0.30
+
+# Required for SQLAlchemy 2.x compatibility (DeclarativeBase):
+SQLAlchemy>=2.0,<2.2
+
+# Core web framework:
+fastapi>=0.100.0,<0.144.0
+starlette>=0.25.0,<0.36.0
+
+# Data validation:
+pydantic>=2.10.0,<2.15.0
+
+# Utility libraries:
+python-dotenv>=1.0.0,<1.5.0
+greenlet>=3.0.0,<4.0.0
